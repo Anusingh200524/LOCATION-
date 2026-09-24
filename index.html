@@ -1,223 +1,438 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Get Directions - Kalindra ITI</title>
+    <title>Kalindra ITI - Get Directions</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+
+            background:
+                radial-gradient(circle at top left, #4facfe, transparent 40%),
+                radial-gradient(circle at bottom right, #7367f0, transparent 40%),
+                linear-gradient(135deg, #eef5ff, #f7f3ff);
+
+            padding: 20px;
         }
 
-        .box {
-            background: white;
-            width: 90%;
-            max-width: 420px;
-            padding: 30px;
-            text-align: center;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        h2 {
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #555;
-            line-height: 1.5;
-        }
-
-        button {
+        .container {
             width: 100%;
-            padding: 15px;
+            max-width: 430px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 28px;
+            padding: 30px 25px;
+            text-align: center;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.15);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .location-icon {
+            width: 85px;
+            height: 85px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 42px;
+
+            background: linear-gradient(
+                135deg,
+                #1a73e8,
+                #6c5ce7
+            );
+
+            box-shadow:
+                0 12px 30px rgba(26, 115, 232, 0.30);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #1f2937;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .destination {
+            margin: 25px 0;
+
+            padding: 18px;
+
+            border-radius: 18px;
+
+            background: #f4f7ff;
+
+            border: 1px solid #e3eaff;
+        }
+
+        .destination-title {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .destination-name {
+            font-size: 19px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+
+        .destination-location {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .direction-button {
+            width: 100%;
+
             border: none;
-            border-radius: 10px;
-            background: #1a73e8;
+            outline: none;
+
+            padding: 17px 20px;
+
+            border-radius: 15px;
+
+            background: linear-gradient(
+                135deg,
+                #1a73e8,
+                #6257e8
+            );
+
             color: white;
+
             font-size: 17px;
             font-weight: bold;
+
             cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(26, 115, 232, 0.30);
+
+            transition: all 0.2s ease;
         }
 
-        button:disabled {
-            background: #999;
+        .direction-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px rgba(26, 115, 232, 0.35);
+        }
+
+        .direction-button:active {
+            transform: scale(0.98);
+        }
+
+        .direction-button:disabled {
+            background: #9ca3af;
+            cursor: wait;
+            box-shadow: none;
+            transform: none;
         }
 
         #status {
-            margin-top: 20px;
+            margin-top: 18px;
+
+            min-height: 22px;
+
             font-size: 14px;
+            line-height: 1.5;
+
+            color: #555;
+        }
+
+        .info {
+            margin-top: 22px;
+
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+
+            font-size: 12px;
+            color: #777;
+        }
+
+        .info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer {
+            margin-top: 25px;
+
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 28px 20px;
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .location-icon {
+                width: 75px;
+                height: 75px;
+                font-size: 36px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-    <h2>📍 Get Directions</h2>
+    <div class="card">
 
-    <p>
-        Allow your location to automatically start navigation
-        to Kalindra ITI.
-    </p>
+        <!-- Location Icon -->
+        <div class="location-icon">
+            📍
+        </div>
 
-    <button id="directionBtn">
-        Allow Location & Get Directions
-    </button>
+        <!-- Heading -->
+        <h1>Get Directions</h1>
 
-    <div id="status"></div>
+        <div class="subtitle">
+            Allow your current location and we'll
+            automatically create a route for you.
+        </div>
+
+        <!-- Destination -->
+        <div class="destination">
+
+            <div class="destination-title">
+                YOUR DESTINATION
+            </div>
+
+            <div class="destination-name">
+                🏫 Kalindra ITI
+            </div>
+
+            <div class="destination-location">
+                📍 Kalindra, Bihar
+            </div>
+
+        </div>
+
+        <!-- Button -->
+        <button
+            class="direction-button"
+            id="directionBtn">
+
+            📍 Allow Location & Get Directions
+
+        </button>
+
+        <!-- Status -->
+        <div id="status"></div>
+
+        <!-- Information -->
+        <div class="info">
+
+            <span>📡 GPS Location</span>
+
+            <span>🚗 Driving Route</span>
+
+            <span>🗺️ Google Maps</span>
+
+        </div>
+
+        <div class="footer">
+            Your location is used only to create the route.
+        </div>
+
+    </div>
 
 </div>
 
 
 <script>
 
-document.getElementById("directionBtn").addEventListener("click", getLocation);
+    const button =
+        document.getElementById("directionBtn");
+
+    const status =
+        document.getElementById("status");
 
 
-function getLocation() {
-
-    const button = document.getElementById("directionBtn");
-    const status = document.getElementById("status");
-
-    // Check browser GPS support
-    if (!navigator.geolocation) {
-
-        status.innerHTML =
-            "❌ Location is not supported by this browser.";
-
-        return;
-    }
-
-
-    // Button loading state
-    button.disabled = true;
-
-    button.innerHTML =
-        "📍 Getting your location...";
-
-    status.innerHTML =
-        "Please allow location access when your browser asks.";
-
-
-    // Get user's CURRENT GPS location
-    navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-            // User's current location
-            const latitude =
-                position.coords.latitude;
-
-            const longitude =
-                position.coords.longitude;
-
-
-            status.innerHTML =
-                "✅ Location found. Opening Google Maps...";
-
-
-            /*
-             * FIXED DESTINATION
-             * Kalindra ITI
-             *
-             * Latitude:  26.3661438
-             * Longitude: 84.3067566
-             */
-
-            const destination =
-                "26.3661438,84.3067566";
-
-
-            /*
-             * Google Maps Directions URL
-             *
-             * origin =
-             * user's automatic GPS location
-             *
-             * destination =
-             * Kalindra ITI
-             */
-
-            const mapsURL =
-                "https://www.google.com/maps/dir/?api=1" +
-                "&origin=" +
-                latitude + "," + longitude +
-                "&destination=" +
-                destination +
-                "&travelmode=driving";
-
-
-            // Open Google Maps
-            window.location.href = mapsURL;
-
-        },
-
-
-        function(error) {
-
-            button.disabled = false;
-
-            button.innerHTML =
-                "Allow Location & Get Directions";
-
-
-            if (error.code === 1) {
-
-                status.innerHTML =
-                    "❌ Location permission denied. " +
-                    "Please allow location access.";
-
-            }
-
-            else if (error.code === 2) {
-
-                status.innerHTML =
-                    "❌ Unable to determine your location. " +
-                    "Please turn on GPS.";
-
-            }
-
-            else if (error.code === 3) {
-
-                status.innerHTML =
-                    "❌ Location request timed out. " +
-                    "Please try again.";
-
-            }
-
-            else {
-
-                status.innerHTML =
-                    "❌ Unable to get your current location.";
-
-            }
-
-        },
-
-
-        {
-            enableHighAccuracy: true,
-            timeout: 20000,
-            maximumAge: 0
-        }
-
+    button.addEventListener(
+        "click",
+        getLocation
     );
 
-}
+
+    function getLocation() {
+
+        /*
+         * Check browser support
+         */
+
+        if (!navigator.geolocation) {
+
+            status.innerHTML =
+                "❌ Your browser does not support location.";
+
+            return;
+        }
+
+
+        /*
+         * Loading state
+         */
+
+        button.disabled = true;
+
+        button.innerHTML =
+            "📡 Finding your location...";
+
+        status.innerHTML =
+            "Please allow location access when your browser asks.";
+
+
+        /*
+         * Get current GPS location
+         */
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+
+                status.innerHTML =
+                    "✅ Location found! Opening Google Maps...";
+
+
+                /*
+                 * FIXED DESTINATION
+                 *
+                 * Kalindra ITI
+                 */
+
+                const destination =
+                    "26.3661438,84.3067566";
+
+
+                /*
+                 * Google Maps Directions
+                 */
+
+                const mapsURL =
+                    "https://www.google.com/maps/dir/?api=1" +
+                    "&origin=" +
+                    latitude + "," + longitude +
+                    "&destination=" +
+                    destination +
+                    "&travelmode=driving";
+
+
+                /*
+                 * Open Google Maps
+                 */
+
+                window.location.href =
+                    mapsURL;
+
+            },
+
+
+            function(error) {
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    "📍 Allow Location & Get Directions";
+
+
+                if (error.code === 1) {
+
+                    status.innerHTML =
+                        "❌ Location permission denied. " +
+                        "Please allow location access in browser settings.";
+
+                }
+
+                else if (error.code === 2) {
+
+                    status.innerHTML =
+                        "❌ Unable to find your location. " +
+                        "Please turn on GPS.";
+
+                }
+
+                else if (error.code === 3) {
+
+                    status.innerHTML =
+                        "❌ Location request timed out. " +
+                        "Please try again.";
+
+                }
+
+                else {
+
+                    status.innerHTML =
+                        "❌ Unable to get your location.";
+                }
+
+            },
+
+
+            {
+                enableHighAccuracy: true,
+                timeout: 20000,
+                maximumAge: 0
+            }
+
+        );
+
+    }
 
 </script>
 
 </body>
 </html>
-```
