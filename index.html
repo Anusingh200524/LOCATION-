@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Get Directions</title>
+    <title>Get Directions - Kalindra ITI</title>
 
     <style>
         body {
@@ -70,7 +71,7 @@
         to Kalindra ITI.
     </p>
 
-    <button id="directionBtn" onclick="getLocation()">
+    <button id="directionBtn">
         Allow Location & Get Directions
     </button>
 
@@ -81,11 +82,15 @@
 
 <script>
 
+document.getElementById("directionBtn").addEventListener("click", getLocation);
+
+
 function getLocation() {
 
     const button = document.getElementById("directionBtn");
     const status = document.getElementById("status");
 
+    // Check browser GPS support
     if (!navigator.geolocation) {
 
         status.innerHTML =
@@ -94,75 +99,125 @@ function getLocation() {
         return;
     }
 
+
+    // Button loading state
     button.disabled = true;
-    button.innerHTML = "📍 Getting your location...";
+
+    button.innerHTML =
+        "📍 Getting your location...";
 
     status.innerHTML =
         "Please allow location access when your browser asks.";
 
+
+    // Get user's CURRENT GPS location
     navigator.geolocation.getCurrentPosition(
 
         function(position) {
 
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+            // User's current location
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
 
             status.innerHTML =
                 "✅ Location found. Opening Google Maps...";
 
+
             /*
-             * Replace the destination below
-             * with your exact Kalindra ITI Google Maps link/coordinates.
+             * FIXED DESTINATION
+             * Kalindra ITI
+             *
+             * Latitude:  26.3661438
+             * Longitude: 84.3067566
              */
 
-            const destination = "Kalindra ITI";
+            const destination =
+                "26.3661438,84.3067566";
+
+
+            /*
+             * Google Maps Directions URL
+             *
+             * origin =
+             * user's automatic GPS location
+             *
+             * destination =
+             * Kalindra ITI
+             */
 
             const mapsURL =
                 "https://www.google.com/maps/dir/?api=1" +
-                "&origin=" + latitude + "," + longitude +
-                "&destination=" + encodeURIComponent(destination) +
+                "&origin=" +
+                latitude + "," + longitude +
+                "&destination=" +
+                destination +
                 "&travelmode=driving";
 
+
+            // Open Google Maps
             window.location.href = mapsURL;
+
         },
+
 
         function(error) {
 
             button.disabled = false;
-            button.innerHTML = "Allow Location & Get Directions";
+
+            button.innerHTML =
+                "Allow Location & Get Directions";
+
 
             if (error.code === 1) {
 
                 status.innerHTML =
-                    "❌ Location permission denied. Please allow location access.";
-
-            } else if (error.code === 2) {
-
-                status.innerHTML =
-                    "❌ Unable to determine your location.";
-
-            } else if (error.code === 3) {
-
-                status.innerHTML =
-                    "❌ Location request timed out.";
-
-            } else {
-
-                status.innerHTML =
-                    "❌ Unable to get your location.";
+                    "❌ Location permission denied. " +
+                    "Please allow location access.";
 
             }
+
+            else if (error.code === 2) {
+
+                status.innerHTML =
+                    "❌ Unable to determine your location. " +
+                    "Please turn on GPS.";
+
+            }
+
+            else if (error.code === 3) {
+
+                status.innerHTML =
+                    "❌ Location request timed out. " +
+                    "Please try again.";
+
+            }
+
+            else {
+
+                status.innerHTML =
+                    "❌ Unable to get your current location.";
+
+            }
+
         },
+
 
         {
             enableHighAccuracy: true,
-            timeout: 15000,
+            timeout: 20000,
             maximumAge: 0
         }
+
     );
+
 }
 
 </script>
 
 </body>
 </html>
+```
